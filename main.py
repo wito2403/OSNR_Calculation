@@ -9,15 +9,6 @@ import tkinter as tk
 from OSNR_calculator import OSNRCalculator
 
 
-# input_power = 0
-# unit_attenuation = 0
-# track_length = 0
-
-# amplifier_locations = []
-# amplifier_gains = []
-# amplifier_noise_factors = []
-
-
 def show_entry_fields():
     print("First Name: %s\nLast Name: %s" % (e_input_power.get(), e_unit_attenuation.get()))
 
@@ -36,8 +27,8 @@ def input_amplifiers_data():
     amplifiers_count = int(e_amplifiers_count.get())
 
     tk.Label(root, text=f"Położenie wzmacniacza {1} [km]: ", pady=10, width=40).grid(row=10)
-    tk.Label(root, text=f"Wzmocnienie wzmacniacza {1} [dB]: ", pady=10, width=40).grid(row=11)
-    tk.Label(root, text=f"Współczynnik szumów wzmacniacza {1}: ", pady=10, width=40).grid(row=12)
+    tk.Label(root, text=f"Wzmocnienie wzmacniacza G{1} [dB]: ", pady=10, width=40).grid(row=11)
+    tk.Label(root, text=f"Współczynnik szumów wzmacniacza N{1} [dB]: ", pady=10, width=40).grid(row=12)
 
     e_amplifier_location = tk.Entry(root, width=50)
     e_amplifier_gain = tk.Entry(root, width=50)
@@ -62,8 +53,8 @@ def input_amplifiers_data():
         ctr += 1
 
         tk.Label(root, text=f"Położenie wzmacniacza {ctr} [km]: ", pady=10, width=40).grid(row=10)
-        tk.Label(root, text=f"Wzmocnienie wzmacniacza {ctr} [dB]: ", pady=10, width=40).grid(row=11)
-        tk.Label(root, text=f"Współczynnik szumów wzmacniacza {ctr}: ", pady=10, width=40).grid(row=12)
+        tk.Label(root, text=f"Wzmocnienie wzmacniacza G{ctr} [dB]: ", pady=10, width=40).grid(row=11)
+        tk.Label(root, text=f"Współczynnik szumów wzmacniacza N{ctr} [dB]: ", pady=10, width=40).grid(row=12)
 
         if ctr == amplifiers_count:
             b1.grid_forget()
@@ -97,9 +88,8 @@ def input_amplifiers_data():
         print(f"Fiber sections:  {calculator.fiber_sections}")
 
         OSNR = calculator.calculate_osnr()
-        # OSNR = 123
         tk.Label(root, text=f"OSNR: ", pady=30, width=40).grid(row=14, column=0)
-        tk.Label(root, text=f"{OSNR.__round__(2)}", pady=30, width=40).grid(row=14, column=1)
+        tk.Label(root, text=f"{OSNR.__round__(2)} [dB]", pady=30, width=40).grid(row=14, column=1)
         pass
 
 
@@ -110,7 +100,7 @@ def restart():
 
 root = tk.Tk()
 root.title('[SIS] Program obliczający OSNR na wyjściu toru optycznego')
-root.geometry("800x600")
+root.geometry("800x430")
 
 tk.Label(root, text="Moc sygnału na wejściu światłowodu [dBm]: ", pady=10, width=40).grid(row=0)
 tk.Label(root, text="Tłumienność jednostkowa światłowodu [dB/km]: ", pady=10, width=40).grid(row=1)
@@ -139,6 +129,7 @@ tk.Button(root,
 #                                 column=5,
 #                                 sticky=tk.W,
 #                                 padx=80)
+
 tk.Button(root,
           text='Rozpocznij wprowadzanie danych wzmacniaczy', command=input_amplifiers_data).grid(row=4,
                                                                                                  column=1,
