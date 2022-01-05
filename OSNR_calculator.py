@@ -51,52 +51,25 @@ class OSNRCalculator:
 
     def calculate_fiber_sections(self):
         fs = []
-        # num_zeros = 0
-        # for j in range(len(self.amplifier_locations)-1):
-        #     if j == 0:
-        #         if self.amplifier_locations[j] == float(0):
-        #             num_zeros += 1
-        #     else:
-        #         if self.amplifier_locations[j] == self.amplifier_locations[j+1]:
-        #             print("\n INKREMENTACJA NUM ZEROS")
-        #             num_zeros += 1
-        #             pass
-
-
-
-        # if self.amplifier_locations[0] == float(0):
-        #     iterator = len(self.amplifier_locations) + 1
-        #     # print("float == 0")
-        # else:
-        #     iterator = len(self.amplifier_locations)
-        #     # print("cos innego")
-
-        # for i in range(len(self.amplifier_locations) + num_zeros):
-        #     if i == 0:
-        #         fs.append(self.amplifier_locations[i])
-        #
-        #     elif i == len(self.amplifier_locations):
-        #         fs.append(self.track_length - self.amplifier_locations[i - 1])
-        #     else:
-        #         fs.append(self.amplifier_locations[i] - self.amplifier_locations[i - 1])
-
-        for i in range(self.amplifiers_count):
-            if i == 0:
-                if self.amplifier_locations[i] == float(0):
-                    fs.append(float(0))
+        if self.amplifiers_count == 0:
+            fs.append(self.track_length)
+        elif self.amplifiers_count == 1:
+            fs.append(self.amplifier_locations[0])
+            fs.append(self.track_length - self.amplifier_locations[0])
+            pass
+        else:
+            for i in range(self.amplifiers_count):
+                if i == 0:
+                    if self.amplifier_locations[i] == float(0):
+                        fs.append(float(0))
+                    else:
+                        fs.append(self.amplifier_locations[i])
                 else:
-                    fs.append(self.amplifier_locations[i])
-            else:
-                fs.append(self.amplifier_locations[i] - self.amplifier_locations[i - 1])
-                if i == (len(self.amplifier_locations) - 1) and self.amplifier_locations[i] != self.track_length:
+                    fs.append(self.amplifier_locations[i] - self.amplifier_locations[i - 1])
+                    if i == (len(self.amplifier_locations) - 1) and self.amplifier_locations[i] != self.track_length:
+                        fs.append(self.track_length - self.amplifier_locations[i])
+                        break
 
-                    fs.append(self.track_length - self.amplifier_locations[i])
-                    break
-
-                # if self.amplifier_locations[i] == self.amplifier_locations[i - 1]:
-                #     fs.append(float(0))
-                # else:
-        # print(fs)
         return fs
 
     def calculate_noise_powers(self):
@@ -111,12 +84,12 @@ class OSNRCalculator:
 
     def calculate_osnr(self):
         osnr: float
-        # osnr = self.input_power
+
         output_power_mw = dBm2mW(self.output_signal_power)
-        print("Output signal power: ", self.output_signal_power.__round__(2))
+        print("Moc sygnału : ", self.output_signal_power.__round__(2))
 
         for i in range(len(self.amplifier_noise_powers)):
-            print(f"PN{i+1}: {self.amplifier_noise_powers[i].__round__(2)}")
+            print(f"Moc szumu pochodząca ze wzmacniacza {i+1} P{i + 1}: {self.amplifier_noise_powers[i].__round__(2)}")
 
         pn_mw = []
         for i in self.amplifier_noise_powers:
