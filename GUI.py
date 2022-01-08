@@ -54,13 +54,14 @@ class GUI:
 
             def calculate_osnr():
                 append_data()
-                print(f"Moc wejściowa: {input_power}")
-                print(f"Tłumienność jednotkowa: {unit_attenuation}")
-                print(f"Długość toru: {track_length}")
+                print(f"\n================== NOWA KALKULACJA ==================\n")
+                print(f"Moc wejściowa [dBm]: {input_power}")
+                print(f"Tłumienność jednotkowa [dB/km]: {unit_attenuation}")
+                print(f"Długość toru [km]: {track_length}")
                 print(f"Liczba wzmacniaczy: {amplifiers_count}")
-                print(f"Położenia wzmacniaczy: {amplifier_locations}")
-                print(f"Wzmocnienia {amplifier_gains}")
-                print(f"Współczynniki szumów: {amplifier_noise_factors}")
+                print(f"Położenia wzmacniaczy [km]: {amplifier_locations}")
+                print(f"Wzmocnienia [dB]: {amplifier_gains}")
+                print(f"Współczynniki szumów [dB]: {amplifier_noise_factors}")
 
                 calculator = OSNRCalculator(input_power, unit_attenuation, track_length, amplifiers_count,
                                             amplifier_locations, amplifier_gains, amplifier_noise_factors,
@@ -87,10 +88,10 @@ class GUI:
 
         root = tk.Tk()
         root.title('[SIS] Program obliczający OSNR na wyjściu toru optycznego')
-        root.geometry("800x550")
+        root.geometry('800x550+550+50')
 
         tk.Label(root, text="Długość fali λ [nm]: ", pady=10, width=40).grid(row=0)
-        tk.Label(root, text="Szerokość filtra optycznego Δλ [nm]: ", pady=10, width=40).grid(row=1)
+        tk.Label(root, text="Szerokość pasma filtru Δλ [nm]: ", pady=10, width=40).grid(row=1)
         pe = u'P\u2099'  # low index n
         tk.Label(root, text=f"Moc nadajnika {str(pe)} [dBm]: ", pady=10, width=40).grid(row=2)
         tk.Label(root, text="Tłumienność jednostkowa α [dB/km]: ", pady=10, width=40).grid(row=3)
