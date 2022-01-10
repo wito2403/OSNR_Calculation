@@ -79,6 +79,8 @@ class OSNRCalculator:
                          + self.constant - self.unit_attenuation * (sum(self.fiber_sections[i + 1:]))
             # print(f"Sum amplifier gains {i}: {sum(self.amplifier_gains[i:])}")
             # print(f"Sum fiber sections {i}: {sum(self.fiber_sections[i + 1:])}\n")
+            # print(i, "NF: ", self.amplifier_noise_factors[i], " Suma wzmocnien: ", sum(self.amplifier_gains[i:]),
+            #       " Suma dlugosci swiatlowodu za wzmacniaczem: ", sum(self.fiber_sections[i + 1:]), " ", " ")
             pn.append(pni)
         return pn
 
@@ -86,10 +88,10 @@ class OSNRCalculator:
         osnr: float
 
         output_power_mw = dBm2mW(self.output_signal_power)
-        print("Moc sygnału : ", self.output_signal_power.__round__(2))
+        print("Moc sygnału na wyjściu [dBm]: ", self.output_signal_power.__round__(2))
 
         for i in range(len(self.amplifier_noise_powers)):
-            print(f"Moc szumu pochodząca ze wzmacniacza {i+1} P{i + 1}: {self.amplifier_noise_powers[i].__round__(2)}")
+            print(f"Moc szumu pochodząca ze wzmacniacza {i+1} Pn{i + 1} [dBm]: {self.amplifier_noise_powers[i].__round__(2)}")
 
         pn_mw = []
         for i in self.amplifier_noise_powers:
